@@ -8,13 +8,8 @@ function HomeScreen({navigation}) {
   const [listOfNotes, setListOfNotes] = useState('')
   const getData = async () => {
     const string = await AsyncStorage.getItem('data');
-    if(string==null){
-      setListOfNotes(true);
-    }
-    else{
     const json = JSON.parse(string);
     setListOfNotes(json.notes);
-    }
     
   }
 
