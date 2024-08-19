@@ -2,25 +2,10 @@ import { View, Text, StyleSheet, TouchableOpacity,  FlatList } from 'react-nativ
 import { useEffect, useState } from 'react'
 import Note from './components/Note';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Alert } from 'react-native';
 
-const clearalldata  = async () => {
-
-  const keys = await AsyncStorage.getAllKeys()
-   await AsyncStorage.multiRemove(keys)
-   Alert.alert('NoteMe',
-                    'All Notes Deleted Successfully',
-                    [
-                        {
-                            text:'OK',
-                        }
-                    ]
-                           )
-
-}
 
 function HomeScreen({navigation}) {
-  const [listOfNotes, setListOfNotes] = useState("")
+  const [listOfNotes, setListOfNotes] = useState('')
   const getData = async () => {
     const string = await AsyncStorage.getItem('data');
     if(string==null){
@@ -40,7 +25,7 @@ function HomeScreen({navigation}) {
   return (
     <View style={styles.body}>
         {
-          (listOfNotes.length == 0)||(listOfNotes==true) ? 
+          (listOfNotes.length == 0)? 
           <View style={{height: 400, justifyContent: 'center', alignItems: 'center'}}>
             <Text style={{color:'#000',fontSize:20}}>Add your notes first</Text>
           </View>
@@ -59,11 +44,6 @@ function HomeScreen({navigation}) {
         </TouchableOpacity>
       </View>
       <View style={styles.delButtonContainer}>
-        <TouchableOpacity onPress={() => clearalldata()}>
-          <View style={styles.delButton}>
-            <Text style={styles.delbuttonText}>Delete All</Text>
-          </View>
-        </TouchableOpacity>
       </View>
     </View>
   );
@@ -99,24 +79,4 @@ const styles = StyleSheet.create({
     fontSize:40,
     fontWeight:'bold' 
   },
-  delButton: {
-    backgroundColor: '#1f2842',
-    height: 50,
-    width: 150,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius:30,
-
-  },
-  delButtonContainer: {
-    position: 'absolute',
-    bottom: 20,
-    left: 20,
-
-  },
-  delbuttonText: {
-    color: '#4ec2b6',
-    fontSize:20,
-    fontWeight:'bold' 
-  }
 })
